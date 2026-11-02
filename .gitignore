@@ -1,0 +1,10 @@
+/target
+
+# secrets: real gate keys/passwords
+vpsproxy.toml
+
+# local CA private key — never commit
+vpsproxy-ca/
+
+# JetBrains IDE
+.idea/

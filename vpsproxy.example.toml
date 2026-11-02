@@ -1,0 +1,31 @@
+# Copy to vpsproxy.toml and fill in your gates.
+# Generate each gate's key:  openssl rand -hex 32
+
+listen = "127.0.0.1:2222"
+
+# Local CA directory for HTTPS (MITM). Created on first run; import
+# <ca_dir>/ca_cert.pem into your browser/OS trust store so https sites work.
+ca_dir = "vpsproxy-ca"
+
+# Chain mode:
+#   "sequential" — always use the gates in the order listed below.
+#   "random"     — build a fresh random chain per request.
+mode = "sequential"
+
+# Random mode only: how many gates per chain (default: all). And whether to
+# keep the LAST [[gate]] as a constant exit node.
+hops = 3
+fixed_exit = false
+
+[[gate]]
+url = "https://host-a.example.com/gate.php"
+key = "0000000000000000000000000000000000000000000000000000000000000000"
+password = "change-me-a"
+
+[[gate]]
+url = "https://host-b.example.com/gate.php"
+key = "1111111111111111111111111111111111111111111111111111111111111111"
+password = "change-me-b"
+
+# Add more [[gate]] blocks for a longer chain. The LAST one is the exit node
+# in sequential mode (and the fixed exit when fixed_exit = true).
